@@ -41,6 +41,13 @@ ifneq ($(TARGET_ARCH),arm)
 ANDROID_JPEG_NO_ASSEMBLER := true
 endif
 
+ifeq ($(HOST_OS),darwin)
+build_mac_version := $(shell sw_vers -productVersion)
+ifneq ($(filter 10.6.%, $(build_mac_version)),)
+ANDROID_JPEG_NO_ASSEMBLER := true
+endif
+endif
+
 ifeq ($(strip $(ANDROID_JPEG_NO_ASSEMBLER)),true)
 LOCAL_SRC_FILES += jidctint.c jidctfst.c jidctred.c
 else
